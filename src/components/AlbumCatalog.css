@@ -1,0 +1,13 @@
+section {
+    padding: 20px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+}
+
+section img {
+    width: 200px;
+    object-fit: contain;
+}
