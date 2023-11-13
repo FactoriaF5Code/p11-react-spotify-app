@@ -8,23 +8,19 @@ class SpotifyService {
             await this.refreshToken(store);
         }
 
-        let token = store.getToken()
-
-        let options = {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + token
-            }
-        }
-
         let url = "https://api.spotify.com/v1/browse/new-releases"
 
-        return await fetch(url, options)
+        return await this.get(url)
             .then(response => response.json())
-    
+
     }
 
+    async searchAlbums(query) {
+        let url = `https://api.spotify.com/v1/search?q=${query}&type=album`
+
+        return await this.get(url)
+            .then(response => response.json())
+    }
 
     async refreshToken(store) {
         const clientId = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
@@ -49,7 +45,23 @@ class SpotifyService {
             .then(response => response.json())
             .then(data => store.setToken(data.access_token));
     }
+
+    get(url) {
+        const store = new TokenStore()
+        let token = store.getToken()
+
+        let options = {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            }
+        }
+        return fetch(url, options)
+    }
 };
+
+
 
 export default SpotifyService;
 

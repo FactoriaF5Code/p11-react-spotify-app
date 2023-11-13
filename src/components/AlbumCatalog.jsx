@@ -1,18 +1,8 @@
-import { useEffect, useState } from "react";
-import SpotifyService from "../services/SpotifyService";
+
 import "./AlbumCatalog.css";
 
-const AlbumCatalog = () => {
-    const spotify = new SpotifyService();
-
-    const [albums, setAlbums] = useState([])
-
-    useEffect(() => {
-        spotify.getNewAlbumReleases()
-            .then(response => setAlbums(response.albums.items))
-    }, []);
-
-
+const AlbumCatalog = ({albums}) => {
+    
     return <section>
 
         {albums && albums.length > 0 &&
